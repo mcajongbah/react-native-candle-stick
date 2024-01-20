@@ -1,20 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from "react-native";
+import { Candle } from "./components/Candle";
+import Chart from "./components/Chart";
+import Header from "./components/Header";
+import candles from "./components/data.json";
+
+const data = candles.slice(-120);
+
+const getDomain = (rows: Candle[]): [number, number] => {
+  const values = rows.map(({ high, low }) => [high, low]).flat();
+  return [Math.min(...values), Math.max(...values)];
+};
+const domain = getDomain(candles);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView className="flex-1 bg-black">
+      <Header candles={data} />
+      <Chart {...{ data, domain }} />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
