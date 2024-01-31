@@ -19,7 +19,7 @@ const Header = ({ candles }: Props) => {
   const change = close - open < 0 ? diff.substring(0, 5) : diff.substring(0, 4);
 
   return (
-    <View className="bg-black">
+    <View>
       <View className="flex flex-row p-4">
         <View
           className="flex-1"
@@ -43,12 +43,12 @@ const Header = ({ candles }: Props) => {
           <HeaderRow
             label="Change"
             value={`${change}%`}
-            color={close - open > 0 ? "#4AFA9A" : "#E33F64"}
+            color={close - open > 0 ? "#138a6e" : "#E33F64"}
           />
         </View>
       </View>
       <View className="p-4">
-        <Text className="text-white">
+        <Text className="text-grey-800">
           {new Date(date).toLocaleString(undefined, {
             hour: "numeric",
             minute: "numeric",

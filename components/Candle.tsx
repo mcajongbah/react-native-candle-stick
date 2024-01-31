@@ -1,6 +1,6 @@
 import { ScaleBand, ScaleLinear } from "d3-scale";
 import React from "react";
-import { G, Line } from "react-native-svg";
+import { G, Line, Rect } from "react-native-svg";
 
 export interface Candle {
   date: string;
@@ -17,11 +17,23 @@ interface CandleProps {
   index: number;
   scaleY: ScaleLinear<number, number>;
   scaleX: ScaleBand<string>;
+  scaleVolume: ScaleLinear<number, number>;
+  VOLUME_HEIGHT: number;
 }
 
-const Candle: React.FC<CandleProps> = ({ candle, index, scaleY, scaleX }) => {
-  const { close, open, high, low } = candle;
-  const fill = close > open ? "#4AFA9A" : "#E33F64";
+const Candle: React.FC<CandleProps> = ({
+  candle,
+  index,
+  scaleY,
+  scaleX,
+  scaleVolume,
+  VOLUME_HEIGHT,
+}) => {
+  const { close, open, high, low, volume } = candle;
+  const fill = close > open ? "#138a6e" : "#E33F64";
+  const volumeBarHeight = scaleVolume(0) - scaleVolume(volume);
+  const volumeBarY =
+    scaleY(scaleY.domain()[0]) - volumeBarHeight + VOLUME_HEIGHT;
 
   return (
     <G key={index} x={scaleX(candle.date)}>
@@ -42,6 +54,14 @@ const Candle: React.FC<CandleProps> = ({ candle, index, scaleY, scaleX }) => {
         stroke={fill}
         strokeLinecap="round"
         strokeWidth={scaleX.bandwidth()}
+      />
+      <Rect
+        x={-scaleX.bandwidth() / 2}
+        y={volumeBarY}
+        width={scaleX.bandwidth()}
+        height={volumeBarHeight}
+        fill={fill}
+        opacity={0.4}
       />
     </G>
   );

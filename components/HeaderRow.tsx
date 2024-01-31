@@ -10,11 +10,11 @@ type Props = {
 const HeaderRow = ({ label, value, color }: Props) => {
   return (
     <View className="flex flex-row justify-between">
-      <Text className="text-[18px] text-gray-200">{label}</Text>
+      <Text className="text-[18px] text-gray-800">{label}</Text>
       <Text
         style={{
           fontVariant: ["tabular-nums"],
-          color: color || "white",
+          color: color || "black",
           fontSize: 18,
         }}
       >
